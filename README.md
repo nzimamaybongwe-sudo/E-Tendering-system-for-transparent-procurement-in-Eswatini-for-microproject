@@ -1,0 +1,2 @@
+# E-Tendering-system-for-transparent-procurement-in-Eswatini-for-microproject
+A web-based E-Tendering System for MicroProjects Eswatini designed to improve transparency, accessibility, and efficiency in public procurement. It enables contractors to register, upload documents, view tenders, and submit bids online. Procurement officers and evaluators can manage tenders, review bids, and monitor procurement activities.
