@@ -1,32 +1,76 @@
-<<<<<<< HEAD
 # E-Tendering System for MicroProjects in Eswatini
 
-## Overview
-This PHP MVC starter app digitizes the paper-based procurement workflow used by microproject units in Eswatini. It includes:
-- Guest analytics dashboard
-- Contractor registration and admin verification
-- Tender publishing and bid submission
-- Secure bid encryption with OpenSSL
-- Audit trail for transparency
-- Starter fraud detection module using Python
+A web-based digital procurement platform designed to enhance transparency, accessibility, and accountability in Eswatini's public procurement for Microprojects.
 
-## Setup
-1. Import the database schema:
-   - Create a MySQL database named `e_tendering`
-   - Run `database/schema.sql`
-2. Update `config/database.php` with your database credentials.
-3. Configure your web server document root to `public/`.
-4. Access the site at `http://localhost/.../public`
+---
 
-## Default admin account
-- Email: `admin@etendering.sz`
-- Password: `Admin@2026` (replace after import if needed)
+## 🔗 Live Preview & Demonstration
 
-## Notes
-- The application uses PDO prepared statements and basic RBAC.
-- The Python script in `python/fraud_detection.py` is a sample logistic regression model for suspicious bid detection.
-- The CMS is built to be extended with evaluation scoring and notification delivery.
+- 🌐 **Live Web Demo:** *(Coming soon / add your hosted URL here)*
+- 🎬 **Video Walkthrough:** [Watch System Demonstration](Presentation1.mp4) *(or add your Google Drive / YouTube link here)*
+- 📄 **Academic Documentation:** [Project_Documentation.docx](Project_Documentation.docx) | [Project_Documentation.md](Project_Documentation.md)
 
-# E-Tendering-system-for-transparent-procurement-in-Eswatini-for-microproject
-A web-based E-Tendering System for MicroProjects Eswatini designed to improve transparency, accessibility, and efficiency in public procurement. It enables contractors to register, upload documents, view tenders, and submit bids online. Procurement officers and evaluators can manage tenders, review bids, and monitor procurement activities.
+---
+
+## 📌 System Overview
+
+This PHP-based system digitizes the manual paper-based procurement process for Microprojects in Eswatini. Key features include:
+
+- **Public Transparency Dashboard:** Open access to public procurement statistics, published tender listings, and scoring rubrics without requiring login.
+- **Contractor Portal:** Easy online company registration, document upload (CIC certificate, tax clearance, etc.), bid submission with cryptographic hash integrity, and appeal filing.
+- **Role-Based Access Control (RBAC):** Distinct dashboards and capabilities for:
+  - **Contractors** (submit bids, track outcomes, upload compliance files)
+  - **Procurement Officers** (publish tenders, manage deadlines, oversee evaluations, execute awards)
+  - **Evaluators** (review assigned bids, enter criterion scores and qualitative feedback)
+  - **Administrators** (verify contractor credentials, manage user roles, audit trail inspection)
+- **Automated Deadlines & Bid Integrity:** Automatic tender closing at deadline boundary, bid lockout, and SHA-256 tamper-detection hashing.
+- **Procurement Guidance Centre:** Embedded guides and tutorials to help local SMEs participate competitively.
+- **Audit Logging:** Immutable timestamped activity logs for accountability.
+
+---
+
+## 🛠️ Technology Stack
+
+- **Backend:** Pure PHP (MVC architecture, PDO prepared statements)
+- **Database:** MySQL relational database (13 normalized tables)
+- **Frontend:** Bootstrap 5 (responsive design), Vanilla JavaScript, HTML5, CSS3
+- **Email Delivery:** PHPMailer (SMTP authenticated notifications)
+- **Analytics / AI Prototype:** Python (`python/fraud_detection.py` for suspicious bidding pattern checks)
+
+---
+
+## 🚀 Local Installation & Setup
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/nzimamaybongwe-sudo/E-Tendering-system-for-transparent-procurement-in-Eswatini-for-microproject.git
+   ```
+2. **Database Configuration:**
+   - Open phpMyAdmin (or your MySQL client) and create a database named `e_tendering`.
+   - Import the database schema from `database/schema.sql`.
+3. **Environment Setup:**
+   - Configure `.env` or `config/database.php` with your local database credentials (`DB_HOST`, `DB_USER`, `DB_PASS`).
+4. **Serve the Application:**
+   - Point your local web server (WAMP, XAMPP, or Apache) document root to the project directory or the `public/` directory.
+   - Access the platform in your browser at:
+     ```text
+     http://localhost/E-Tendering system project/public/
+     ```
+
+---
+
+## 🔐 Default Demo Accounts
+
+| Role | Email | Password |
+|---|---|---|
+| **Administrator** | `admin@etendering.sz` | `Admin@2026` |
+
+---
+
+## 👥 Author & Academic Context
+
+- **Author:** Nzima Mayibongwe (Student No: 202280218)
+- **Supervisor:** Mr Makhubu
+- **Department:** Department of Computer Science
+- **Institution:** Eswatini Medical Christian University, Mbabane, Eswatini
  
