@@ -64,12 +64,4 @@ This PHP-based system digitizes the manual paper-based procurement process for M
 |---|---|---|
 | **Administrator** | `admin@etendering.sz` | `Admin@2026` |
 
----
-
-## 👥 Author & Academic Context
-
-- **Author:** Nzima Mayibongwe (Student No: 202280218)
-- **Supervisor:** Mr Makhubu
-- **Department:** Department of Computer Science
-- **Institution:** Eswatini Medical Christian University, Mbabane, Eswatini
  
