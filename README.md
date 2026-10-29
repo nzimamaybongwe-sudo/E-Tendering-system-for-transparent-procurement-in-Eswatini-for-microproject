@@ -8,7 +8,6 @@ A web-based digital procurement platform designed to enhance transparency, acces
 
 - 🌐 **Live Web Demo:** *(Coming soon / add your hosted URL here)*
 - 🎬 **Video Walkthrough:** [Watch System Demonstration](Presentation1.mp4) *(or add your Google Drive / YouTube link here)*
-- 📄 **Academic Documentation:** [Project_Documentation.docx](Project_Documentation.docx) | [Project_Documentation.md](Project_Documentation.md)
 
 ---
 
