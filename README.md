@@ -6,7 +6,7 @@ A web-based digital procurement platform designed to enhance transparency, acces
 
 ## 🔗 Live Preview & Demonstration
 
-- 🌐 **Live Web Demo:** *(Coming soon / add your hosted URL here)*
+- 🌐 **Interactive Web Demo:** [👉 Click Here to Preview the System Live](https://nzimamaybongwe-sudo.github.io/E-Tendering-system-for-transparent-procurement-in-Eswatini-for-microproject/)
 - 🎬 **Video Walkthrough:** [Watch System Demonstration](Presentation1.mp4) *(or add your Google Drive / YouTube link here)*
 
 ---

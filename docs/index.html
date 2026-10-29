@@ -1,0 +1,949 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive prototype preview of the digital E-Tendering System for MicroProjects Eswatini.">
+    <title>E-Tendering System â€” MicroProjects Eswatini (Interactive Demo)</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Application Stylesheet -->
+    <link rel="stylesheet" href="assets/styles.css">
+
+    <style>
+        .demo-bar {
+            background: #111827;
+            color: #f3f4f6;
+            font-size: 0.82rem;
+            padding: 8px 16px;
+            border-bottom: 2px solid #ffd700;
+        }
+        .demo-pill {
+            cursor: pointer;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .demo-pill.active {
+            background: #ffd700;
+            color: #111827 !important;
+        }
+        .demo-pill:not(.active) {
+            background: rgba(255,255,255,0.12);
+            color: #f3f4f6 !important;
+        }
+        .demo-pill:hover:not(.active) {
+            background: rgba(255,255,255,0.25);
+        }
+        .tab-view {
+            display: none;
+        }
+        .tab-view.active {
+            display: block;
+        }
+        .card-custom {
+            border: 1px solid rgba(13, 75, 139, 0.12);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 25px rgba(13, 75, 139, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(13, 75, 139, 0.14);
+        }
+        .hash-code {
+            font-family: 'Courier New', Courier, monospace;
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            word-break: break-all;
+            color: #0f172a;
+        }
+    </style>
+</head>
+<body>
+
+<!-- â”€â”€ Live Demo Control Ribbon â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+<div class="demo-bar d-flex justify-content-between align-items-center flex-wrap gap-2 sticky-top" style="z-index: 1200;">
+    <div class="d-flex align-items-center gap-2 flex-wrap">
+        <span class="badge bg-warning text-dark"><i class="bi bi-broadcast me-1"></i>LIVE PROTOTYPE PREVIEW</span>
+        <span class="d-none d-md-inline text-secondary">|</span>
+        <span class="text-light fw-medium">Switch User View:</span>
+        <a class="demo-pill active" onclick="switchTab('home', this)"><i class="bi bi-house me-1"></i>Guest / Public</a>
+        <a class="demo-pill" onclick="switchTab('tenders', this)"><i class="bi bi-briefcase me-1"></i>Available Tenders</a>
+        <a class="demo-pill" onclick="switchTab('stats', this)"><i class="bi bi-bar-chart me-1"></i>Public Statistics</a>
+        <a class="demo-pill" onclick="switchTab('contractor', this)"><i class="bi bi-person-badge me-1"></i>Contractor Portal</a>
+        <a class="demo-pill" onclick="switchTab('evaluator', this)"><i class="bi bi-check2-square me-1"></i>Evaluator Console</a>
+        <a class="demo-pill" onclick="switchTab('admin', this)"><i class="bi bi-shield-lock me-1"></i>Admin Dashboard</a>
+        <a class="demo-pill" onclick="switchTab('guidance', this)"><i class="bi bi-book me-1"></i>Guidance Centre</a>
+    </div>
+    <div>
+        <a href="https://github.com/nzimamaybongwe-sudo/E-Tendering-system-for-transparent-procurement-in-Eswatini-for-microproject" target="_blank" class="btn btn-sm btn-outline-light py-0 px-2" style="font-size:0.75rem;">
+            <i class="bi bi-github me-1"></i>View Code on GitHub
+        </a>
+    </div>
+</div>
+
+<!-- â”€â”€ Navigation Bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+<nav class="navbar navbar-expand-lg site-navbar">
+    <div class="container">
+        <a class="navbar-brand text-decoration-none" href="javascript:void(0)" onclick="switchTab('home')">
+            <img src="assets/logo.jpg" alt="MicroProjects Eswatini Logo" class="navbar-logo">
+            <span class="navbar-brand-text">MicroProjects Eswatini</span>
+        </a>
+
+        <button class="navbar-toggler text-white border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <i class="bi bi-list fs-2"></i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+                <li class="nav-item">
+                    <a class="nav-link active" id="nav-home" href="javascript:void(0)" onclick="switchTab('home')">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="nav-tenders" href="javascript:void(0)" onclick="switchTab('tenders')">Available Tenders <span class="badge bg-warning text-dark ms-1">4 Active</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="nav-stats" href="javascript:void(0)" onclick="switchTab('stats')">Public Statistics</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="nav-guidance" href="javascript:void(0)" onclick="switchTab('guidance')">Guidance Centre</a>
+                </li>
+                <li class="nav-item ms-lg-2">
+                    <a class="btn btn-warning btn-sm text-dark fw-bold px-3 py-2 rounded-pill shadow-sm" href="javascript:void(0)" onclick="switchTab('contractor')">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>Contractor Login
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- â”€â”€ Background â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+<div class="page-bg" style="background-image: url('assets/003.png'); background-attachment: fixed; background-size: cover; background-position: center; position: fixed; inset: 0; z-index: -1; opacity: 0.18;"></div>
+
+<div class="container my-4">
+
+    <!-- ======================================================== -->
+    <!-- TAB 1: HOME / GUEST VIEW                                  -->
+    <!-- ======================================================== -->
+    <div id="view-home" class="tab-view active">
+        <!-- Hero Banner -->
+        <div class="home-hero-wrap fade-in-up text-center my-4 py-4 px-3" style="background: linear-gradient(135deg, rgba(13,75,139,0.95), rgba(16,42,74,0.95)); border-radius: 16px; color: white; box-shadow: 0 15px 35px rgba(13,75,139,0.25);">
+            <div class="home-hero-logo-wrap mb-3">
+                <img src="assets/logo.jpg" alt="Logo" class="rounded-circle shadow" style="width: 85px; height: 85px; object-fit: cover; border: 3px solid #ffd700;">
+            </div>
+            <p class="text-warning fw-bold text-uppercase mb-1" style="letter-spacing: 2px; font-size: 0.85rem;">Kingdom of Eswatini â€¢ Ministry of Economic Planning & Development</p>
+            <h1 class="display-6 fw-bold mb-2">MicroProjects Eswatini E-Tendering System</h1>
+            <p class="lead text-light mb-4" style="max-width: 780px; margin: 0 auto; font-size: 1.05rem;">
+                A centralized, transparent digital procurement platform engineered to eliminate paper delays, enforce cryptographic bid integrity, and empower local contractors in community infrastructure projects.
+            </p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <button class="btn btn-warning text-dark fw-bold px-4 py-2 rounded-pill shadow" onclick="switchTab('tenders')">
+                    <i class="bi bi-search me-2"></i>Browse Active Tenders
+                </button>
+                <button class="btn btn-outline-light fw-bold px-4 py-2 rounded-pill" onclick="switchTab('contractor')">
+                    <i class="bi bi-pencil-square me-2"></i>Contractor Dashboard Demo
+                </button>
+                <button class="btn btn-outline-warning text-warning fw-bold px-4 py-2 rounded-pill" onclick="switchTab('stats')">
+                    <i class="bi bi-graph-up me-2"></i>View Public Stats
+                </button>
+            </div>
+        </div>
+
+        <!-- Visual Highlights -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="card-custom p-2 h-100 overflow-hidden">
+                    <img src="assets/002.png" alt="Community Project" class="img-fluid rounded" style="height: 180px; width: 100%; object-fit: cover;">
+                    <div class="p-2">
+                        <h6 class="fw-bold text-primary mb-1 mt-2">Community Schools & Clinics</h6>
+                        <p class="small text-muted mb-0">Direct procurement for rural development infrastructure across all 4 regions.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-custom p-2 h-100 overflow-hidden">
+                    <img src="assets/02.jpg" alt="Infrastructure Construction" class="img-fluid rounded" style="height: 180px; width: 100%; object-fit: cover;">
+                    <div class="p-2">
+                        <h6 class="fw-bold text-primary mb-1 mt-2">Clean Water Schemes & Bridges</h6>
+                        <p class="small text-muted mb-0">Open tendering with standardized bills of quantities and published technical drawings.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-custom p-2 h-100 overflow-hidden">
+                    <img src="assets/04.jpg" alt="Public Procurement" class="img-fluid rounded" style="height: 180px; width: 100%; object-fit: cover;">
+                    <div class="p-2">
+                        <h6 class="fw-bold text-primary mb-1 mt-2">Equitable Local Participation</h6>
+                        <p class="small text-muted mb-0">Tailored support for Swazi SMMEs registered with the Construction Industry Council (CIC).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Core System Pillars -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-4">
+                <div class="card-custom p-4 h-100">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-primary text-white rounded-3 p-3 me-3"><i class="bi bi-file-earmark-lock2 fs-4"></i></div>
+                        <h5 class="fw-bold mb-0">Cryptographic Bid Locking</h5>
+                    </div>
+                    <p class="text-secondary small">
+                        At submission, every proposal is digested into an immutable <strong>SHA-256 hash</strong>. Bids remain sealed and tamper-evident until the official opening date.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-custom p-4 h-100">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-warning text-dark rounded-3 p-3 me-3"><i class="bi bi-clock-history fs-4"></i></div>
+                        <h5 class="fw-bold mb-0">Automated Deadlines</h5>
+                    </div>
+                    <p class="text-secondary small">
+                        Server-side timers enforce strict tender closing at the second of the deadline. Late submissions are automatically blocked, eliminating favoritism.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-custom p-4 h-100">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-success text-white rounded-3 p-3 me-3"><i class="bi bi-eye fs-4"></i></div>
+                        <h5 class="fw-bold mb-0">Public Accountability</h5>
+                    </div>
+                    <p class="text-secondary small">
+                        Evaluation rubrics, consensus score sheets, and final contract awardees are broadcast publicly to restore civic trust in state procurement.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- TAB 2: AVAILABLE TENDERS                                   -->
+    <!-- ======================================================== -->
+    <div id="view-tenders" class="tab-view">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+            <div>
+                <h2 class="fw-bold text-primary mb-1"><i class="bi bi-briefcase me-2"></i>Published Tender Opportunities</h2>
+                <p class="text-muted mb-0">Browse and filter active invitations to tender issued by MicroProjects Eswatini.</p>
+            </div>
+            <button class="btn btn-primary btn-sm rounded-pill px-3" onclick="alert('In production, verified procurement officers can publish new tenders here.')">
+                <i class="bi bi-plus-circle me-1"></i>Create New Tender (Officer)
+            </button>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="card-custom p-3 mb-4">
+            <div class="row g-2 align-items-center">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                        <input type="text" id="tenderSearch" class="form-control" placeholder="Search by project name or reference..." onkeyup="filterTenders()">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select id="categoryFilter" class="form-select" onchange="filterTenders()">
+                        <option value="">All Categories</option>
+                        <option value="Civil Works">Civil Works</option>
+                        <option value="Building">Building & Construction</option>
+                        <option value="Water Systems">Water Systems & Sanitation</option>
+                        <option value="Electrical">Electrical Works</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select id="regionFilter" class="form-select" onchange="filterTenders()">
+                        <option value="">All Regions</option>
+                        <option value="Hhohho">Hhohho Region</option>
+                        <option value="Manzini">Manzini Region</option>
+                        <option value="Lubombo">Lubombo Region</option>
+                        <option value="Shiselweni">Shiselweni Region</option>
+                    </select>
+                </div>
+                <div class="col-md-2 text-end">
+                    <button class="btn btn-outline-secondary w-100" onclick="resetFilters()">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tender Cards List -->
+        <div class="row g-4" id="tendersContainer">
+            <!-- Tender 1 -->
+            <div class="col-md-6 tender-item" data-category="Building" data-region="Hhohho" data-title="Construction of 3 Classroom Blocks at Motshane Primary School">
+                <div class="card-custom p-4 h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <span class="badge bg-success"><i class="bi bi-unlock me-1"></i>OPEN â€” SUBMISSIONS ACTIVE</span>
+                            <span class="badge bg-light text-dark border">Ref: MP-2026-BLD-004</span>
+                        </div>
+                        <h5 class="fw-bold text-primary mb-2">Construction of 3 Classroom Blocks at Motshane Primary School</h5>
+                        <p class="small text-muted mb-3">Construction of modern standard classrooms including electrical fittings, solar backup provision, and disability accessibility ramps.</p>
+                        <div class="row g-2 small text-secondary mb-3">
+                            <div class="col-6"><i class="bi bi-geo-alt text-danger me-1"></i><strong>Region:</strong> Hhohho</div>
+                            <div class="col-6"><i class="bi bi-cash-stack text-success me-1"></i><strong>Est. Budget:</strong> E 780,000.00</div>
+                            <div class="col-6"><i class="bi bi-award text-warning me-1"></i><strong>CIC Grade:</strong> Grade B4 / C5</div>
+                            <div class="col-6"><i class="bi bi-clock-history text-primary me-1"></i><strong>Closes:</strong> In 6 days</div>
+                        </div>
+                    </div>
+                    <div class="pt-3 border-top d-flex justify-content-between align-items-center">
+                        <button class="btn btn-outline-primary btn-sm rounded-pill" onclick="openTenderModal('Motshane Primary School', 'MP-2026-BLD-004', 'E 780,000.00', 'Grade B4 / C5', 'Hhohho')">
+                            <i class="bi bi-info-circle me-1"></i>View Details
+                        </button>
+                        <button class="btn btn-warning btn-sm text-dark fw-bold rounded-pill" onclick="openBidModal('Motshane Primary School', 'MP-2026-BLD-004')">
+                            <i class="bi bi-send-check me-1"></i>Submit Bid
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tender 2 -->
+            <div class="col-md-6 tender-item" data-category="Water Systems" data-region="Lubombo" data-title="Installation of Solar-Powered Borehole Water Supply Scheme">
+                <div class="card-custom p-4 h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <span class="badge bg-success"><i class="bi bi-unlock me-1"></i>OPEN â€” SUBMISSIONS ACTIVE</span>
+                            <span class="badge bg-light text-dark border">Ref: MP-2026-WAT-011</span>
+                        </div>
+                        <h5 class="fw-bold text-primary mb-2">Installation of Solar-Powered Borehole Water Supply Scheme</h5>
+                        <p class="small text-muted mb-3">Borehole drilling, solar pump installation, 10,000L elevated tank construction, and distribution pipes for Siphofaneni community.</p>
+                        <div class="row g-2 small text-secondary mb-3">
+                            <div class="col-6"><i class="bi bi-geo-alt text-danger me-1"></i><strong>Region:</strong> Lubombo</div>
+                            <div class="col-6"><i class="bi bi-cash-stack text-success me-1"></i><strong>Est. Budget:</strong> E 450,000.00</div>
+                            <div class="col-6"><i class="bi bi-award text-warning me-1"></i><strong>CIC Grade:</strong> Grade ME3 / W4</div>
+                            <div class="col-6"><i class="bi bi-clock-history text-primary me-1"></i><strong>Closes:</strong> In 3 days</div>
+                        </div>
+                    </div>
+                    <div class="pt-3 border-top d-flex justify-content-between align-items-center">
+                        <button class="btn btn-outline-primary btn-sm rounded-pill" onclick="openTenderModal('Siphofaneni Water Supply', 'MP-2026-WAT-011', 'E 450,000.00', 'Grade ME3 / W4', 'Lubombo')">
+                            <i class="bi bi-info-circle me-1"></i>View Details
+                        </button>
+                        <button class="btn btn-warning btn-sm text-dark fw-bold rounded-pill" onclick="openBidModal('Siphofaneni Water Supply', 'MP-2026-WAT-011')">
+                            <i class="bi bi-send-check me-1"></i>Submit Bid
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tender 3 -->
+            <div class="col-md-6 tender-item" data-category="Civil Works" data-region="Manzini" data-title="Rehabilitation of 12km Gravel Access Road and Culvert Construction">
+                <div class="card-custom p-4 h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <span class="badge bg-secondary"><i class="bi bi-lock me-1"></i>CLOSED â€” EVALUATION IN PROGRESS</span>
+                            <span class="badge bg-light text-dark border">Ref: MP-2026-CW-028</span>
+                        </div>
+                        <h5 class="fw-bold text-primary mb-2">Rehabilitation of 12km Gravel Access Road & Culverts</h5>
+                        <p class="small text-muted mb-3">Bush clearing, reshaping, heavy grading, gravelling, and drainage structures along the Luve-Mliba feeder corridor.</p>
+                        <div class="row g-2 small text-secondary mb-3">
+                            <div class="col-6"><i class="bi bi-geo-alt text-danger me-1"></i><strong>Region:</strong> Manzini</div>
+                            <div class="col-6"><i class="bi bi-cash-stack text-success me-1"></i><strong>Est. Budget:</strong> E 1,200,000.00</div>
+                            <div class="col-6"><i class="bi bi-award text-warning me-1"></i><strong>CIC Grade:</strong> Grade R5</div>
+                            <div class="col-6"><i class="bi bi-calendar-x text-danger me-1"></i><strong>Deadline:</strong> Closed on 24 Oct</div>
+                        </div>
+                    </div>
+                    <div class="pt-3 border-top d-flex justify-content-between align-items-center">
+                        <button class="btn btn-outline-primary btn-sm rounded-pill" onclick="alert('This tender is closed. Bids are cryptographically locked and currently undergoing committee evaluation.')">
+                            <i class="bi bi-eye me-1"></i>View Status
+                        </button>
+                        <span class="text-muted small"><i class="bi bi-shield-check text-success me-1"></i>7 Bids Sealed</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tender 4 -->
+            <div class="col-md-6 tender-item" data-category="Building" data-region="Shiselweni" data-title="Construction of Rural Health Clinic Staff Quarters">
+                <div class="card-custom p-4 h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <span class="badge bg-primary"><i class="bi bi-trophy me-1"></i>AWARDED</span>
+                            <span class="badge bg-light text-dark border">Ref: MP-2026-BLD-001</span>
+                        </div>
+                        <h5 class="fw-bold text-primary mb-2">Construction of Rural Health Clinic Staff Quarters</h5>
+                        <p class="small text-muted mb-3">Two 2-bedroom units for medical staff at Nhlangano community clinic with rainwater harvesting and perimeter fencing.</p>
+                        <div class="row g-2 small text-secondary mb-3">
+                            <div class="col-6"><i class="bi bi-geo-alt text-danger me-1"></i><strong>Region:</strong> Shiselweni</div>
+                            <div class="col-6"><i class="bi bi-cash-stack text-success me-1"></i><strong>Winning Bid:</strong> E 625,400.00</div>
+                            <div class="col-6"><i class="bi bi-building-check text-success me-1"></i><strong>Awardee:</strong> Shiselweni Builders Ltd</div>
+                            <div class="col-6"><i class="bi bi-check2-circle text-primary me-1"></i><strong>Score:</strong> 94.2% Total</div>
+                        </div>
+                    </div>
+                    <div class="pt-3 border-top d-flex justify-content-between align-items-center">
+                        <button class="btn btn-outline-success btn-sm rounded-pill" onclick="switchTab('stats')">
+                            <i class="bi bi-file-earmark-bar-graph me-1"></i>View Public Award Notice
+                        </button>
+                        <span class="text-success small fw-bold"><i class="bi bi-check-circle me-1"></i>Published Publicly</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- TAB 3: PUBLIC STATISTICS                                  -->
+    <!-- ======================================================== -->
+    <div id="view-stats" class="tab-view">
+        <div class="mb-4">
+            <h2 class="fw-bold text-primary mb-1"><i class="bi bi-bar-chart-line me-2"></i>Public Procurement Statistics</h2>
+            <p class="text-muted mb-0">Live transparency portal open to the public without requiring system registration.</p>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="card-custom p-3 text-center">
+                    <p class="text-muted small text-uppercase mb-1">Total Published Tenders</p>
+                    <h2 class="fw-bold text-primary mb-0">34</h2>
+                    <small class="text-success"><i class="bi bi-arrow-up"></i> 8 Active Now</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card-custom p-3 text-center">
+                    <p class="text-muted small text-uppercase mb-1">Registered Contractors</p>
+                    <h2 class="fw-bold text-warning mb-0">87</h2>
+                    <small class="text-muted">100% Verified Profiles</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card-custom p-3 text-center">
+                    <p class="text-muted small text-uppercase mb-1">Total Awarded Capital</p>
+                    <h2 class="fw-bold text-success mb-0">E 21.4M</h2>
+                    <small class="text-secondary">Community projects</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card-custom p-3 text-center">
+                    <p class="text-muted small text-uppercase mb-1">Swazi SME Share</p>
+                    <h2 class="fw-bold text-info mb-0">86.2%</h2>
+                    <small class="text-success"><i class="bi bi-check2"></i> Policy Compliant</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Awarded Tenders Table -->
+        <div class="card-custom p-4 mb-4">
+            <h5 class="fw-bold text-primary mb-3"><i class="bi bi-journal-check me-2"></i>Recent Public Contract Awards</h5>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Tender Ref</th>
+                            <th>Project Description</th>
+                            <th>Region</th>
+                            <th>Successful Contractor</th>
+                            <th>Contract Sum</th>
+                            <th>Evaluation Score</th>
+                            <th>Award Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="badge bg-light text-dark border">MP-2026-BLD-001</span></td>
+                            <td class="fw-semibold">Rural Health Clinic Staff Quarters</td>
+                            <td>Shiselweni</td>
+                            <td>Shiselweni Builders Ltd</td>
+                            <td class="fw-bold text-success">E 625,400.00</td>
+                            <td><span class="badge bg-success">94.2 / 100</span></td>
+                            <td>18 Oct 2026</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge bg-light text-dark border">MP-2026-WAT-002</span></td>
+                            <td class="fw-semibold">Mbabane Community Water Reticulation</td>
+                            <td>Hhohho</td>
+                            <td>Hhohho Hydrosystems PTY</td>
+                            <td class="fw-bold text-success">E 840,120.00</td>
+                            <td><span class="badge bg-success">91.5 / 100</span></td>
+                            <td>04 Oct 2026</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge bg-light text-dark border">MP-2026-CW-019</span></td>
+                            <td class="fw-semibold">Sidvokodvo Footbridge & Drift</td>
+                            <td>Manzini</td>
+                            <td>Vuvulane Civils & Plant</td>
+                            <td class="fw-bold text-success">E 390,000.00</td>
+                            <td><span class="badge bg-success">89.8 / 100</span></td>
+                            <td>22 Sep 2026</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- TAB 4: CONTRACTOR DASHBOARD DEMO                          -->
+    <!-- ======================================================== -->
+    <div id="view-contractor" class="tab-view">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+            <div>
+                <h2 class="fw-bold text-primary mb-1"><i class="bi bi-person-badge me-2"></i>Contractor Dashboard</h2>
+                <p class="text-muted mb-0">Logged in as: <strong>Eswatini Civil Dynamics Ltd</strong> (Reg No: 2023/11840/07 | CIC Grade 4)</p>
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-primary btn-sm rounded-pill" onclick="alert('Profile editor modal would open here.')">
+                    <i class="bi bi-pencil me-1"></i>Edit Profile
+                </button>
+                <button class="btn btn-warning btn-sm text-dark fw-bold rounded-pill" onclick="switchTab('tenders')">
+                    <i class="bi bi-search me-1"></i>Bid on Open Tender
+                </button>
+            </div>
+        </div>
+
+        <!-- Compliance Status Alert -->
+        <div class="alert alert-success d-flex align-items-center justify-content-between flex-wrap gap-2 shadow-sm rounded-3">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-shield-check fs-2 text-success me-3"></i>
+                <div>
+                    <strong>Statutory Compliance Verified: Active</strong>
+                    <div class="small">Tax Clearance, CIC Registration, and ENPF documents approved by System Administrator.</div>
+                </div>
+            </div>
+            <span class="badge bg-success">Eligible to Submit Bids</span>
+        </div>
+
+        <!-- Submitted Bids with Hash Verification -->
+        <div class="card-custom p-4 mb-4">
+            <h5 class="fw-bold text-primary mb-3"><i class="bi bi-folder-check me-2"></i>My Tender Submissions & Cryptographic Proofs</h5>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Tracking No</th>
+                            <th>Tender Reference</th>
+                            <th>Bid Amount</th>
+                            <th>SHA-256 Bid Hash (Integrity Fingerprint)</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>TRK-984210</code></td>
+                            <td>MP-2026-BLD-004</td>
+                            <td class="fw-bold">E 745,000.00</td>
+                            <td><span class="hash-code">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</span></td>
+                            <td><span class="badge bg-success">Sealed & Recorded</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="alert('Digital receipt verified: Hash matches recorded timestamp in database.')">
+                                    <i class="bi bi-patch-check text-success"></i> Verify
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>TRK-872194</code></td>
+                            <td>MP-2026-WAT-011</td>
+                            <td class="fw-bold">E 432,000.00</td>
+                            <td><span class="hash-code">a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e</span></td>
+                            <td><span class="badge bg-primary">Under Review</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="alert('Digital receipt verified: Hash matches recorded timestamp in database.')">
+                                    <i class="bi bi-patch-check text-success"></i> Verify
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Live Bid Hash Generator Demo -->
+        <div class="card-custom p-4 mb-4" style="background: #fafcff;">
+            <h5 class="fw-bold text-primary mb-2"><i class="bi bi-cpu me-2"></i>Interactive Bid Hash Simulation</h5>
+            <p class="small text-muted mb-3">Test how the E-Tendering platform prevents bid tampering by creating a digital fingerprint at the exact moment of submission:</p>
+            <div class="row g-3">
+                <div class="col-md-5">
+                    <label class="form-label small fw-bold">Test Bid Amount (SZL)</label>
+                    <input type="number" id="demoAmount" class="form-control" value="650000" oninput="calculateDemoHash()">
+                </div>
+                <div class="col-md-7">
+                    <label class="form-label small fw-bold">Technical Proposal Summary</label>
+                    <input type="text" id="demoText" class="form-control" value="Comprehensive bills of quantities + 12-week construction schedule" oninput="calculateDemoHash()">
+                </div>
+                <div class="col-12">
+                    <label class="form-label small fw-bold">Generated Tamper-Evident SHA-256 Hash:</label>
+                    <div id="demoHashOutput" class="hash-code p-2 text-primary fw-bold">Calculated on keystroke...</div>
+                    <small class="text-muted"><i class="bi bi-info-circle me-1"></i>If even 1 cent or character is modified after submission, this hash changes instantly, flagging tampering during evaluation.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- TAB 5: EVALUATOR CONSOLE                                  -->
+    <!-- ======================================================== -->
+    <div id="view-evaluator" class="tab-view">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+            <div>
+                <h2 class="fw-bold text-primary mb-1"><i class="bi bi-check2-square me-2"></i>Evaluator Scoring Interface</h2>
+                <p class="text-muted mb-0">Assigned Evaluation: <strong>Tender MP-2026-BLD-004</strong> (Motshane Primary School)</p>
+            </div>
+            <span class="badge bg-info text-dark px-3 py-2">Role: Independent Technical Evaluator</span>
+        </div>
+
+        <div class="card-custom p-4 mb-4">
+            <h5 class="fw-bold text-primary mb-3">Scoring Rubric Matrix</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Evaluation Criterion</th>
+                            <th style="width: 15%;">Max Weight</th>
+                            <th style="width: 25%;">Assigned Score</th>
+                            <th>Evaluator Comments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Technical Capability & Plant:</strong> Assessment of construction equipment, machinery ownership, and staff accreditation.</td>
+                            <td class="text-center fw-bold">40 pts</td>
+                            <td><input type="number" class="form-control" value="36" max="40" min="0" onchange="updateTotalScore()"></td>
+                            <td><input type="text" class="form-control form-control-sm" value="Strong local equipment base, CIC certified site agent."></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Financial Competitiveness:</strong> Comparison against MicroProjects benchmark budget estimate.</td>
+                            <td class="text-center fw-bold">40 pts</td>
+                            <td><input type="number" class="form-control" value="38" max="40" min="0" onchange="updateTotalScore()"></td>
+                            <td><input type="text" class="form-control form-control-sm" value="Realistic pricing within the approved 5% margin."></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Local Swazi Ownership & Empowerment:</strong> Verification of Form J, Form C, and local youth/women employment proportion.</td>
+                            <td class="text-center fw-bold">20 pts</td>
+                            <td><input type="number" class="form-control" value="19" max="20" min="0" onchange="updateTotalScore()"></td>
+                            <td><input type="text" class="form-control form-control-sm" value="100% Swazi-owned indigenous construction enterprise."></td>
+                        </tr>
+                    </tbody>
+                    <tfoot class="table-light">
+                        <tr>
+                            <td class="fw-bold text-end">Total Consolidated Score:</td>
+                            <td class="text-center fw-bold text-primary">100 pts</td>
+                            <td class="fw-bold text-success fs-5" id="evaluatorTotal">93 / 100 (Pass)</td>
+                            <td>
+                                <button class="btn btn-success btn-sm w-100 fw-bold" onclick="alert('Score successfully committed to consensus session with cryptographic evaluator signature.')">
+                                    <i class="bi bi-check-circle me-1"></i>Submit Score to Committee
+                                </button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- TAB 6: ADMIN CONSOLE                                      -->
+    <!-- ======================================================== -->
+    <div id="view-admin" class="tab-view">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+            <div>
+                <h2 class="fw-bold text-primary mb-1"><i class="bi bi-shield-lock me-2"></i>Administrator Governance Console</h2>
+                <p class="text-muted mb-0">System health monitoring, audit trail inspection, and contractor verification.</p>
+            </div>
+            <span class="badge bg-danger px-3 py-2">Role: System Administrator</span>
+        </div>
+
+        <!-- Audit Log Demonstration -->
+        <div class="card-custom p-4 mb-4">
+            <h5 class="fw-bold text-primary mb-3"><i class="bi bi-clock-history me-2"></i>Immutable System Audit Trail</h5>
+            <div class="table-responsive">
+                <table class="table table-sm table-hover align-middle small mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>User Identifier</th>
+                            <th>Action Type</th>
+                            <th>Entity / Record</th>
+                            <th>IP Address</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2026-10-29 07:15:22</td>
+                            <td><code>procurement_officer_2</code></td>
+                            <td><span class="badge bg-primary">TENDER_PUBLISHED</span></td>
+                            <td>MP-2026-BLD-004</td>
+                            <td>196.202.240.12</td>
+                            <td><span class="text-success"><i class="bi bi-check"></i> Recorded</span></td>
+                        </tr>
+                        <tr>
+                            <td>2026-10-29 06:40:11</td>
+                            <td><code>contractor_12</code></td>
+                            <td><span class="badge bg-success">BID_LODGED</span></td>
+                            <td>TRK-984210 (SHA256)</td>
+                            <td>197.234.18.5</td>
+                            <td><span class="text-success"><i class="bi bi-check"></i> Sealed</span></td>
+                        </tr>
+                        <tr>
+                            <td>2026-10-28 23:59:59</td>
+                            <td><code>SYSTEM_DAEMON</code></td>
+                            <td><span class="badge bg-danger">TENDER_AUTO_CLOSED</span></td>
+                            <td>MP-2026-CW-028</td>
+                            <td>127.0.0.1</td>
+                            <td><span class="text-success"><i class="bi bi-check"></i> Enforced</span></td>
+                        </tr>
+                        <tr>
+                            <td>2026-10-28 15:20:04</td>
+                            <td><code>admin_mayibongwe</code></td>
+                            <td><span class="badge bg-warning text-dark">CONTRACTOR_VERIFIED</span></td>
+                            <td>Company: Eswatini Civil Dynamics</td>
+                            <td>41.190.92.14</td>
+                            <td><span class="text-success"><i class="bi bi-check"></i> Approved</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- TAB 7: GUIDANCE CENTRE                                    -->
+    <!-- ======================================================== -->
+    <div id="view-guidance" class="tab-view">
+        <div class="mb-4">
+            <h2 class="fw-bold text-primary mb-1"><i class="bi bi-book me-2"></i>Procurement Guidance Centre</h2>
+            <p class="text-muted mb-0">Empowering local contractors with tutorials, compliance instructions, and bid preparation guidelines.</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card-custom p-4 h-100">
+                    <h5 class="fw-bold text-primary mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Mandatory Tender Compliance Checklist</h5>
+                    <ul class="list-group list-group-flush small">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Valid Construction Industry Council (CIC) Certificate
+                            <span class="badge bg-primary">Required</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Eswatini Revenue Service (ERS) Tax Compliance Certificate
+                            <span class="badge bg-primary">Required</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Eswatini National Provident Fund (ENPF) Clearance
+                            <span class="badge bg-primary">Required</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Form J (Shareholder Structure) & Form C (Directors)
+                            <span class="badge bg-primary">Required</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Police Clearance for Company Directors (under 3 months)
+                            <span class="badge bg-secondary">Mandatory</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card-custom p-4 h-100">
+                    <h5 class="fw-bold text-primary mb-3"><i class="bi bi-camera-video text-danger me-2"></i>Video Demonstration & Training</h5>
+                    <p class="small text-muted mb-3">Watch our step-by-step presentation covering the entire lifecycle of tendering on the MicroProjects platform:</p>
+                    <div class="bg-dark text-white rounded-3 p-4 text-center my-3">
+                        <i class="bi bi-play-circle display-4 text-warning"></i>
+                        <h6 class="mt-2 mb-1">System Demonstration & Walkthrough</h6>
+                        <small class="text-secondary">Authored by Mayibongwe Nzima (202280218)</small>
+                    </div>
+                    <button class="btn btn-outline-primary btn-sm w-100 rounded-pill" onclick="alert('The video Presentation1.mp4 is available in your repository root or Google Drive!')">
+                        <i class="bi bi-download me-1"></i>Access Video Resources
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- â”€â”€ Detail Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+<div class="modal fade" id="tenderDetailModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalTenderTitle">Tender Specifications</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <span class="badge bg-success" id="modalTenderRef">Ref</span>
+                    <span class="badge bg-light text-dark border ms-2" id="modalTenderRegion">Region</span>
+                </div>
+                <p class="text-secondary small">This tender is issued under MicroProjects standard community development guidelines. Contractors must hold a valid CIC certificate and submit compliant tax clearance.</p>
+                <ul class="list-group list-group-flush small mb-3">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <strong>Estimated Budget:</strong>
+                        <span id="modalTenderBudget" class="text-success fw-bold">E 0.00</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <strong>Required CIC Grade:</strong>
+                        <span id="modalTenderGrade">Grade</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning btn-sm text-dark fw-bold" onclick="alert('Download started: Tender Specifications & BOQ.')">
+                    <i class="bi bi-download me-1"></i>Download Bill of Quantities (PDF)
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- â”€â”€ Interactive Bid Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+<div class="modal fade" id="bidModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-warning text-dark">
+                <h5 class="modal-title fw-bold"><i class="bi bi-send-check me-2"></i>Electronic Bid Lodgment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p class="small text-muted mb-3" id="bidModalTitle">Tender details</p>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Bid Amount (SZL)</label>
+                    <input type="number" class="form-control" id="modalBidAmount" placeholder="Enter total quotation in Emalangeni...">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Technical Proposal Document</label>
+                    <input type="file" class="form-control form-control-sm" accept=".pdf">
+                    <small class="text-muted" style="font-size:0.75rem;">Only verified PDF dossiers accepted.</small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary btn-sm fw-bold" onclick="simulateBidSubmit()">
+                    <i class="bi bi-lock-fill me-1"></i>Seal & Submit Bid
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer bg-dark text-white pt-4 pb-3 mt-5">
+    <div class="container text-center text-md-start">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <h6 class="text-warning fw-bold text-uppercase"><i class="bi bi-building me-2"></i>MicroProjects Eswatini</h6>
+                <p class="small text-secondary mb-0">Transparent procurement for community development. Bachelor of Science in Computer Science Project by <strong>Nzima Mayibongwe</strong> (202280218).</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <p class="small text-secondary mb-0">Supervisor: <strong>Mr Makhubu</strong> | Eswatini Medical Christian University</p>
+            </div>
+        </div>
+        <hr class="border-secondary my-3">
+        <p class="small text-center text-secondary mb-0">&copy; 2026 MicroProjects Eswatini E-Tendering System. Prototype demonstration.</p>
+    </div>
+</footer>
+
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    function switchTab(tabId, pillElement) {
+        // Hide all views
+        document.querySelectorAll('.tab-view').forEach(view => view.classList.remove('active'));
+        // Show selected view
+        const targetView = document.getElementById('view-' + tabId);
+        if (targetView) targetView.classList.add('active');
+
+        // Update pills
+        if (pillElement) {
+            document.querySelectorAll('.demo-pill').forEach(pill => pill.classList.remove('active'));
+            pillElement.classList.add('active');
+        }
+
+        // Scroll to top of content smoothly
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function filterTenders() {
+        const query = document.getElementById('tenderSearch').value.toLowerCase();
+        const category = document.getElementById('categoryFilter').value;
+        const region = document.getElementById('regionFilter').value;
+
+        document.querySelectorAll('.tender-item').forEach(item => {
+            const itemCat = item.getAttribute('data-category');
+            const itemReg = item.getAttribute('data-region');
+            const itemTitle = item.getAttribute('data-title').toLowerCase();
+
+            const matchesSearch = itemTitle.includes(query);
+            const matchesCat = !category || itemCat === category;
+            const matchesReg = !region || itemReg === region;
+
+            if (matchesSearch && matchesCat && matchesReg) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+
+    function resetFilters() {
+        document.getElementById('tenderSearch').value = '';
+        document.getElementById('categoryFilter').value = '';
+        document.getElementById('regionFilter').value = '';
+        filterTenders();
+    }
+
+    function openTenderModal(title, ref, budget, grade, region) {
+        document.getElementById('modalTenderTitle').innerText = title;
+        document.getElementById('modalTenderRef').innerText = ref;
+        document.getElementById('modalTenderRegion').innerText = region;
+        document.getElementById('modalTenderBudget').innerText = budget;
+        document.getElementById('modalTenderGrade').innerText = grade;
+        new bootstrap.Modal(document.getElementById('tenderDetailModal')).show();
+    }
+
+    function openBidModal(title, ref) {
+        document.getElementById('bidModalTitle').innerText = ref + ' â€” ' + title;
+        new bootstrap.Modal(document.getElementById('bidModal')).show();
+    }
+
+    function simulateBidSubmit() {
+        const amount = document.getElementById('modalBidAmount').value;
+        if (!amount) {
+            alert('Please enter a bid quotation amount.');
+            return;
+        }
+        bootstrap.Modal.getInstance(document.getElementById('bidModal')).hide();
+        alert('SUCCESS!\n\nBid successfully sealed and recorded.\nTracking Reference: TRK-' + Math.floor(100000 + Math.random() * 900000) + '\nCryptographic SHA-256 integrity hash generated and locked until official opening date.');
+    }
+
+    // SHA-256 simulation on input
+    async function sha256(message) {
+        const msgBuffer = new TextEncoder().encode(message);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function calculateDemoHash() {
+        const amt = document.getElementById('demoAmount').value;
+        const txt = document.getElementById('demoText').value;
+        const combined = 'AMOUNT=' + amt + '|PROPOSAL=' + txt + '|TIMESTAMP=' + new Date().toISOString();
+        const hash = await sha256(combined);
+        document.getElementById('demoHashOutput').innerText = hash;
+    }
+
+    // Initialize demo hash
+    calculateDemoHash();
+</script>
+
+</body>
+</html>
