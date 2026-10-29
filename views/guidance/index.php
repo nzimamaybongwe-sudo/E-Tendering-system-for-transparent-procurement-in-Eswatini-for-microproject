@@ -8,7 +8,7 @@
         </p>
     </div>
     <div class="col-lg-3 text-center d-none d-lg-block">
-        <img src="/E-Tendering system project/public/assets/logo.jpg" alt="MicroProjects Eswatini Logo" class="img-fluid rounded-circle shadow-sm border border-2 border-white" style="max-height: 120px; width: auto; object-fit: cover;">
+        <img src="assets/logo.jpg" alt="MicroProjects Eswatini Logo" class="img-fluid rounded-circle shadow-sm border border-2 border-white" style="max-height: 120px; width: auto; object-fit: cover;">
     </div>
 </div>
 
@@ -58,7 +58,7 @@
         </ul>
     </div>
     <div class="col-md-5 text-center">
-         <img src="/E-Tendering system project/public/assets/logo.jpg" alt="Support" class="img-fluid rounded-circle shadow" style="max-height: 200px;">
+         <img src="assets/logo.jpg" alt="Support" class="img-fluid rounded-circle shadow" style="max-height: 200px;">
     </div>
 </div>
 

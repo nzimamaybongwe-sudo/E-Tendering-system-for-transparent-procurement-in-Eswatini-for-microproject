@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-6 col-md-8">
             <div class="mb-4 text-center">
-                <img src="/E-Tendering system project/public/assets/logo.jpg" alt="Logo" style="height: 60px; width: auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                <img src="assets/logo.jpg" alt="Logo" style="height: 60px; width: auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
                 <h1 class="display-6 fw-bold mt-3 text-dark">Register as Procurement Officer</h1>
                 <p class="lead text-muted small">Submit your employee credentials to join the MicroProjects procurement department.</p>
             </div>

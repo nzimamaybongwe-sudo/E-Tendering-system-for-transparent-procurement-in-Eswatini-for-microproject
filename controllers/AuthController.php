@@ -517,9 +517,10 @@ class AuthController extends BaseController
                 $resetModel = new PasswordResetModel($this->pdo);
                 $resetModel->createToken($user['user_id'], $token, $expiresAt);
 
-                $resetLink = (isset($_SERVER['HTTPS']) ? 'https' : 'http')
+                $baseUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http')
                     . '://' . $_SERVER['HTTP_HOST']
-                    . '/E-Tendering system project/public/index.php?route=reset-password&token=' . $token;
+                    . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
+                $resetLink = $baseUrl . '/index.php?route=reset-password&token=' . $token;
 
                 $mailer = new MailerService($this->config);
                 $mailer->send(

@@ -3,7 +3,7 @@
     <div class="col-lg-6">
         <div class="auth-hero">
             <div class="text-center mb-4">
-                <img src="/E-Tendering system project/public/assets/logo.jpg" alt="MicroProjects Eswatini Logo" class="img-fluid mb-3" style="max-height: 100px; width: auto; border-radius: 50%; object-fit: cover;">
+                <img src="assets/logo.jpg" alt="MicroProjects Eswatini Logo" class="img-fluid mb-3" style="max-height: 100px; width: auto; border-radius: 50%; object-fit: cover;">
                 <div style="padding: 8px 20px;">
                     <span style="color: #000000; font-size: 1.1rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">MicroProjects Eswatini</span>
                 </div>

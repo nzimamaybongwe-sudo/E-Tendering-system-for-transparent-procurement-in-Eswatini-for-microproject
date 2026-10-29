@@ -8,7 +8,7 @@
 <!-- ── Hero Banner ─────────────────────────────────────────── -->
 <div class="home-hero-wrap fade-in-up">
     <div class="home-hero-logo-wrap">
-        <img src="/E-Tendering system project/public/assets/logo.jpg"
+        <img src="assets/logo.jpg"
              alt="MicroProjects Eswatini Logo"
              class="home-hero-logo">
     </div>
@@ -23,13 +23,13 @@
 <!-- ── Hero Thumbnails Row ─────────────────────────────────── -->
 <div class="row g-3 mb-4 fade-in-up" style="animation-delay:0.1s;">
     <div class="col-12 col-md-4">
-        <img src="/E-Tendering system project/public/assets/002.png" alt="MicroProjects Image 002" class="home-pic w-100">
+        <img src="assets/002.png" alt="MicroProjects Image 002" class="home-pic w-100">
     </div>
     <div class="col-12 col-md-4">
-        <img src="/E-Tendering system project/public/assets/02.jpg" alt="MicroProjects Image 02" class="home-pic w-100">
+        <img src="assets/02.jpg" alt="MicroProjects Image 02" class="home-pic w-100">
     </div>
     <div class="col-12 col-md-4">
-        <img src="/E-Tendering system project/public/assets/04.jpg" alt="MicroProjects Image 04" class="home-pic w-100">
+        <img src="assets/04.jpg" alt="MicroProjects Image 04" class="home-pic w-100">
     </div>
 </div>
 

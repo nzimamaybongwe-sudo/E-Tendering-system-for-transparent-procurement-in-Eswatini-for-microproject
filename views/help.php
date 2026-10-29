@@ -41,7 +41,7 @@
                             </ul>
                             <p>Tip: Use the top navigation menu to move between pages quickly.</p>
                             <div class="text-center mt-4">
-                                <img src="/E-Tendering system project/public/assets/platform-overview.png" alt="Platform Overview" class="img-fluid rounded shadow-sm border border-2">
+                                <img src="assets/platform-overview.png" alt="Platform Overview" class="img-fluid rounded shadow-sm border border-2">
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                             </ul>
                             <p>If you forget your password, click <strong>Forgot Password</strong> and follow the reset instructions.</p>
                             <div class="text-center mt-4">
-                                <img src="/E-Tendering system project/public/assets/registration-overview.png" alt="Registration Overview" class="img-fluid rounded shadow-sm border border-2">
+                                <img src="assets/registration-overview.png" alt="Registration Overview" class="img-fluid rounded shadow-sm border border-2">
                             </div>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                             </ol>
                             <p>Watch for tender-specific instructions and required attachments.</p>
                             <div class="text-center mt-4">
-                                <img src="/E-Tendering system project/public/assets/available-tenders-overview.png" alt="Available Tenders Overview" class="img-fluid rounded shadow-sm border border-2">
+                                <img src="assets/available-tenders-overview.png" alt="Available Tenders Overview" class="img-fluid rounded shadow-sm border border-2">
                             </div>
                         </div>
                     </div>

@@ -1,10 +1,9 @@
 <?php
 // config/database.php
 return [
-    // Update these values to match your MySQL installation
-    'host' => 'localhost',
-    'dbname' => 'e_tendering',
-    'user' => 'root',
-    'password' => '',
+    'host'     => getenv('DB_HOST') ?: 'localhost',
+    'dbname'   => getenv('DB_NAME') ?: 'e_tendering',
+    'user'     => getenv('DB_USER') ?: 'root',
+    'password' => getenv('DB_PASS') !== false ? getenv('DB_PASS') : '',
 ];
 ?>

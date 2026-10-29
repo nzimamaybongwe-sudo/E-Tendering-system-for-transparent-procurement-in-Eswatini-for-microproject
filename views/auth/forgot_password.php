@@ -1,7 +1,7 @@
 <div class="row justify-content-center auth-page">
     <div class="col-lg-5">
         <div class="auth-hero text-center mb-4">
-            <img src="/E-Tendering system project/public/assets/logo.jpg" alt="Logo" class="img-fluid mb-3" style="max-height:80px;border-radius:50%;object-fit:cover;">
+            <img src="assets/logo.jpg" alt="Logo" class="img-fluid mb-3" style="max-height:80px;border-radius:50%;object-fit:cover;">
             <h1 class="h3 fw-bold">Forgot Password</h1>
             <p class="text-muted">Enter your account email and we'll send you a reset link.</p>
         </div>

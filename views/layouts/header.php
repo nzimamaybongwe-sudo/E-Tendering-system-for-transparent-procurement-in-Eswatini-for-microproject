@@ -25,7 +25,7 @@
 <nav class="navbar navbar-expand-lg site-navbar sticky-top">
     <div class="container">
         <a class="navbar-brand" href="index.php">
-            <img src="/E-Tendering system project/public/assets/logo.jpg" alt="MicroProjects Eswatini Logo" class="navbar-logo">
+            <img src="assets/logo.jpg" alt="MicroProjects Eswatini Logo" class="navbar-logo">
             <span class="navbar-brand-text">MicroProjects Eswatini</span>
         </a>
 
